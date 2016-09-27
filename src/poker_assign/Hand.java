@@ -46,13 +46,14 @@ public class Hand {
 		for (HandType ht : HandType.values()) {
 			if (ht.isValid(this)) {
 				handType = ht;
+				return;
 			}
 		}
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Hand [id=" + id + ", cards=" + cards + "]";
+		return "Hand [id=" + id + ", handType=" + handType + ", cards=" + cards + "]";
 	}
 	
 }

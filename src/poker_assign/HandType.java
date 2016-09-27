@@ -49,7 +49,8 @@ public enum HandType {
 			int firstCard = cards.get(0).getRankVal();
 			int lastCard = cards.get(
 					cards.size() - 1).getRankVal();
-			if ((lastCard - firstCard) == 5) {
+			if ((lastCard - firstCard) == 4 &&
+					getInterchangeablePairs(h) == 0) {
 				return true;
 			}
 			return false;

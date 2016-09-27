@@ -13,6 +13,7 @@ public class Poker {
 	
 	private static final int NUM_PLAYERS = 5;
 	private static final int HAND_SIZE = 5;
+	private static final String NL = System.lineSeparator();
 	private static final Set<Card> DECK;
 		static {
 			DECK = new HashSet<>();
@@ -33,7 +34,17 @@ public class Poker {
 					+ " in the deck!"
 					);
 		}
+		pile = new Stack<>();
+		hands = new ArrayList<>();
 		shuffleDeck(new ArrayList<Card>(DECK));
+	}
+
+	public List<Hand> getHands() {
+		return hands;
+	}
+	
+	public void setHands(List<Hand> hands) {
+		this.hands = hands;
 	}
 	
 	private boolean validDeckSize() {
@@ -42,12 +53,11 @@ public class Poker {
 	
 	private void shuffleDeck(List<Card> d) {
 		List<Card> deck = d;
-		Stack<Card> pile = new Stack<>();
 		Collections.shuffle(deck);
 		pile.addAll(deck);
 	}
 	
-	private List<Card> dealHand() {
+	public List<Card> dealHand() {
 		ArrayList<Card> hand = new ArrayList<>();
 		for (int i = 0; i < HAND_SIZE; i++) {
 			hand.add(pile.pop());
@@ -55,7 +65,7 @@ public class Poker {
 		return hand;
 	}
 	
-	private Hand findBestHand() {
+	public Hand findBestHand() {
 		for (Hand h : hands) {
 			h.classifyHand();
 		}
@@ -63,7 +73,7 @@ public class Poker {
 				hands,
 				(o1, o2) -> o1.getHandType().compareTo(o2.getHandType())
 				);
-		return hands.get(hands.size() - 1);
+		return hands.get(0);
 	}
 
 	public static void main(String[] args) {
@@ -77,13 +87,18 @@ public class Poker {
 		for (int i = 0; i < NUM_PLAYERS; i++) {
 			p.hands.add(new Hand(i, p.dealHand()));
 		}
+		Hand bestHand = p.findBestHand();
 		System.out.println(p.toString());
-		System.out.println("Best Hand [" + p.findBestHand().toString() + "]");
+		System.out.println("Best Hand [" + bestHand.toString() + "]");
 	}
 	
 	@Override
 	public String toString() {
-		return "Poker [hands=" + hands + "]";
+		StringBuilder s = new StringBuilder();
+		for (Hand h : getHands()) {
+			s.append(h + NL);
+		}
+		return s.toString();
 	}
 
 }

@@ -12,7 +12,7 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return "[cardSuit + cardRank]";
+		return "[" + cardSuit + cardRank + "]";
 	}
 
 	public Suit getSuit() {
